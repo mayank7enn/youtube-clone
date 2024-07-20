@@ -14,13 +14,9 @@ const LeftNav = () => {
     const clickHandler = (name, type) => {
         switch (type) {
             case "category":
-                setSelectedCategory(name);
-                navigate(`/category/${name}`);
-                break;
+                return setSelectedCategory(name);
             case "home":
-                setSelectedCategory(name);
-                navigate("/");
-                break;
+                return setSelectedCategory(name);
             case "menu":
                 return false;
             default:
@@ -30,31 +26,35 @@ const LeftNav = () => {
 
     return (
         <div
-            className={`md:block w-[240px] overflow-y-auto h-full py-4 bg-black absolute md:relative z-10 transition-transform ${
-                mobileMenu ? "translate-x-0" : "-translate-x-full"
-            } md:translate-x-0`}
+            className={`md:block w-[240px] overflow-y-auto h-full py-4 bg-black absolute md:relative z-10 transition-transform ${mobileMenu ? "translate-x-0" : "-translate-x-full"
+                } md:translate-x-0`}
         >
+
             <div className="flex px-5 flex-col">
-                {categories.map((item) => (
-                    <React.Fragment key={item.name}>
-                        <LeftNavMenuItem
-                            text={item.type === "home" ? "Home" : item.name}
-                            icon={item.icon}
-                            action={() => clickHandler(item.name, item.type)}
-                            className={`${
-                                selectedCategory === item.name
-                                    ? "bg-white/[0.15]"
-                                    : ""
-                            }`}
-                        />
-                        {item.divider && (
-                            <hr className="my-5 border-white/[0.2]" />
-                        )}
-                    </React.Fragment>
-                ))}
+                {categories.map((item) => {
+                    return (
+                        <React.Fragment key={item.name}>
+                            <LeftNavMenuItem
+                                text={item.type === "home" ? "Home" : item.name}
+                                icon={item.icon}
+                                action={() => {
+                                    clickHandler(item.name, item.type);
+                                    navigate("/");
+                                }}
+                                className={`${selectedCategory === item.name
+                                        ? "bg-white/[0.15]"
+                                        : ""
+                                    }`}
+                            />
+                            {item.divider && (
+                                <hr className="my-5 border-white/[0.2]" />
+                            )}
+                        </React.Fragment>
+                    );
+                })}
                 <hr className="my-5 border-white/[0.2]" />
                 <div className="text-white/[0.5] text-[12px]">
-                    Clone by: Mayank Sharma
+                    Clone by: JS Dev Hindi
                 </div>
             </div>
         </div>
